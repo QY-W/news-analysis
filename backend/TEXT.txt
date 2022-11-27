@@ -1,0 +1,8 @@
+.\venv\Scripts\activate
+activate flask
+python app.py
+
+
+.\venv\Scripts\activate &
+activate flask&
+python app.py
