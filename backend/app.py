@@ -23,12 +23,6 @@ def open_door():
 
 @app.route("/trending", methods=["GET"])
 def show_list():
-    # RESOURCES = [
-    #     {"id": "SSNI-103", "title": "葵つかさ", "learnt": True},
-    #     {"id": "JUY-349", "title": "蒂亚", "learnt": False},
-    #     {"id": "MXSPS-535", "title": "麻生希", "learnt": True},
-    # ]
-    #    return jsonify({"status": "success", "trending": RESOURCES})
     apiKey = "58de53b7-a9ef-45d9-bf11-60072288147d"
     searchContent = "trump"
     link2 = "https://content.guardianapis.com/search?&api-key=test" #"https://content.guardianapis.com/search?q=&api-key=test"

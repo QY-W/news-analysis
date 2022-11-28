@@ -4,14 +4,13 @@
     <h1>Trending News</h1>
     <ol class="gradient-list" id="displayList">
     <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-    <li>Aenean tincidunt elit at ipsum cursus, vitae interdum nulla suscipit.</li>
-
     <li v-for="(r,id) in trending" :key = "id">
       <!-- <p>{{r}}</p> -->
       <h3>Title:{{r.webTitle}}</h3>
       <!-- <p>Date:{{r.webPublicationDate}}</p> -->
       <a :href = r.webUrl>Original Link</a>
       {{r.id}}
+      <button @click="sendToDetail()">Send to Detail</button>
     </li>
     </ol>
     <!-- <tr v-for = "r in resources" : key = "index">
@@ -26,7 +25,7 @@
 <script>
 import axios from 'axios';
 // import DetailPage from '../components/DetailPage.vue';
-// import bus from '../eventbus.js';
+import {Bus} from '../eventbus.js';
 export default {
   // components: { DetailPage },
   name: 'Trending',
@@ -36,6 +35,10 @@ export default {
     };
   },
   methods: {
+    // sending to detail page
+    // sendToDetail() {
+    //   bus.$emit("aMSG", "MSG from trending")
+    // },
     // getting from flask----------------
     getResources() {
       const path = 'http://localhost:5000/trending';
