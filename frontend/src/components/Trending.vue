@@ -11,7 +11,7 @@
       <!-- <p>Date:{{r.webPublicationDate}}</p> -->
       <a :href = r.webUrl>Original Link</a>
       {{r.id}}
-      <button @click="passID" class="btn-detail" >Send to Detail</button>
+      <button @click="passID(r.id)" class="btn-detail" >Send to Detail</button>
     </li>
     </ol>
     <!-- <tr v-for = "r in resources" : key = "index">
@@ -28,6 +28,7 @@ import axios from 'axios';
 // import DetailPage from '../components/DetailPage.vue';
 import bus from '@/bus/mittbus.js';
 import router from '@/router/index.js'
+// import { useRoute, useRoute} from 'vue-router'
 export default {
   // components: { DetailPage },
   name: 'Trending',
@@ -39,10 +40,16 @@ export default {
   },
   methods: {
     // sending to detail page
-    passID() {
-      bus.emit('toDetail', this.id);
-      console.log("pressed"+this.id);
+    passID(someid) {
+      this.id = someid;
+      console.log("btn pressed "+this.id);
       // router.push('detail')
+      router.push({
+        path: 'detail',
+        query: {
+          id: this.id
+        }
+      })
     },
     // sendToDetail() {
     //   bus.$emit("aMSG", "MSG from trending")
