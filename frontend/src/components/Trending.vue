@@ -1,6 +1,7 @@
 <template>
   <div class="trending">
     <h1>{{ msg }}</h1>
+    <button @click="passID" >&&&&&&&&&&&</button>
     <h1>Trending News</h1>
     <ol class="gradient-list" id="displayList">
     <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
@@ -10,7 +11,7 @@
       <!-- <p>Date:{{r.webPublicationDate}}</p> -->
       <a :href = r.webUrl>Original Link</a>
       {{r.id}}
-      <button @click="sendToDetail()">Send to Detail</button>
+      <button @click="passID" class="btn-detail" >Send to Detail</button>
     </li>
     </ol>
     <!-- <tr v-for = "r in resources" : key = "index">
@@ -25,17 +26,24 @@
 <script>
 import axios from 'axios';
 // import DetailPage from '../components/DetailPage.vue';
-import {Bus} from '../eventbus.js';
+import bus from '@/bus/mittbus.js';
+import router from '@/router/index.js'
 export default {
   // components: { DetailPage },
   name: 'Trending',
   data() {
     return {
       trending: [],
+      id:"msg passed from trending page"
     };
   },
   methods: {
     // sending to detail page
+    passID() {
+      bus.emit('toDetail', this.id);
+      console.log("pressed"+this.id);
+      // router.push('detail')
+    },
     // sendToDetail() {
     //   bus.$emit("aMSG", "MSG from trending")
     // },
@@ -65,6 +73,31 @@ export default {
 .trending{
   width: 80%;
   margin-left:10% ;
+}
+.btn-detail {
+  padding: 7px 18px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  background-color: #9ab4e4;
+  transition: all 0.3s;
+}
+.btn-detail:hover {
+  border-radius: 20px;
+  /* color: var(--feedback-primary-color); */
+  background-color:  #3972b2;
+  background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffacac' fill-opacity='0.4'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  animation: animatedBackground 5s linear infinite alternate;
+}
+
+@keyframes animatedBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
 }
 
 h3 {

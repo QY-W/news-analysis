@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../components/HomePage.vue'
 import SomeDoor from '../components/SomeDoor.vue'
-import Trending from '../components/Trending.vue'
-import DetailPage from '../components/DetailPage.vue'
+import Trending from '@/components/Trending.vue'
+import DetailPage from '@/components/DetailPage.vue'
 import { createApp } from 'vue'
 
 const routes = [
