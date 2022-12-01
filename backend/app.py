@@ -39,7 +39,7 @@ def show_list():
 @app.route("/detail", methods=["GET", "POST"])
 def show_detail():
     result = ""
-    if request.method == "POST":
+    if request.method == "GET":
         id = request.get_data(as_text=True)
         # result = "Flask return" + id
         result = get_detail(id)

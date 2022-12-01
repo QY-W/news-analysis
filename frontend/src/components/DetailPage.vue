@@ -29,12 +29,12 @@ export default {
       const path = 'http://localhost:5000/detail';
       // const path = '/api/detail/';
       // axios.post(path,this.id)
-      axios.post(path, this.id)
+      // axios.post(path, this.id)
+      axios.post('http://localhost:8080/api/detail',this.id)
         .then((res) => {
           this.id = res.data.detailResults;
           console.log("ssssssssssssssssss")
           console.log(this.id)
-
         })
         .catch((error) => {
           // eslint-disable-next-line

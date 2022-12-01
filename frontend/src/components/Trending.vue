@@ -42,6 +42,7 @@ export default {
     // sending to detail page
     passID(someid) {
       this.id = someid;
+      // bus.emit('toDetail', this.id);
       console.log("btn pressed "+this.id);
       // router.push('detail')
       router.push({
