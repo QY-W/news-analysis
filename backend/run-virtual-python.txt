@@ -3,6 +3,10 @@ activate flask
 python app.py
 
 
+.\venv\Scripts\activate
+pip install flask
+pip install flask_cors
+
 .\venv\Scripts\activate &
 activate flask&
 python app.py

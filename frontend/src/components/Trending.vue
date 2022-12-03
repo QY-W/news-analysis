@@ -1,10 +1,9 @@
 <template>
   <div class="trending">
     <h1>{{ msg }}</h1>
-    <button @click="passID" >&&&&&&&&&&&</button>
     <h1>Trending News</h1>
     <ol class="gradient-list" id="displayList">
-    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+    <!-- <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li> -->
     <li v-for="(r,id) in trending" :key = "id">
       <!-- <p>{{r}}</p> -->
       <h3>Title:{{r.webTitle}}</h3>
