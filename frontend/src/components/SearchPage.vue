@@ -1,44 +1,70 @@
 <template>
-  <div class="trending">
-    <h1>{{ msg }}</h1>
-    <h1>Trending News</h1>
+  <div class="search">
+    <input type="text" v-model="searchText" placeholder="Type some text" />
+    <!-- <span>Content: {{searchText}}</span> -->
+  <h3>radio buttons</h3>
+  <input type="radio" v-model="sortMethod" value="relevance" checked="checked">Relevance
+  <input type="radio" v-model="sortMethod" value="newest">Newest
+  <input type="radio" v-model="sortMethod" value="oldest">Oldest
+  <br>
+  <input type="checkbox" id="useTime"  v-model="boxChecked">
+  <label > Filter time</label><br>
+
+  From: 
+  <input type="date" id="time-start" name="trip-start"
+       value="1900-01-01">     
+  To:
+  <input type="date" id="time-end" name="trip-end"
+       value="2022-12-09">
+
+  <span>Sort Method: {{sortMethod}}</span>
+  <br>
+  <br>
+    <button @click="searchNews">Submit</button>
+    <!-- Result redender list -->
     <ol class="gradient-list" id="displayList">
-    <!-- <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li> -->
-    <li v-for="(r,id) in trending" :key = "id">
+    <li v-for="(r,id) in searchResult" :key = "id">
       <!-- <p>{{r}}</p> -->
       <h3>Title:{{r.webTitle}}</h3>
-      <!-- <p>Date:{{r.webPublicationDate}}</p> -->
       <a :href = r.webUrl>Original Link</a>
       {{r.id}}
       <button @click="passID(r.id)" class="btn-detail" >See Details</button>
     </li>
     </ol>
-    <!-- <tr v-for = "r in resources" : key = "index">
-      <td>{{r.id}}</td>
-      <td>{{r.title}}</td>
-    </tr> -->
-
-
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-// import DetailPage from '../components/DetailPage.vue';
-import bus from '@/bus/mittbus.js';
 import router from '@/router/index.js'
-// import { useRoute, useRoute} from 'vue-router'
+import $ from 'jquery'
 export default {
-  // components: { DetailPage },
-  name: 'Trending',
+  name: "SearchPage",
   data() {
     return {
-      trending: [],
-      id:"msg passed from trending page"
+      sortMethod: "relevance",
+      searchText: "content",
+      searchResult: [],    
+      std: {},
+      boxChecked:false
     };
   },
   methods: {
-    // sending to detail page
+    searchNews() {
+      const path = '/api/search'
+      this.std = {"sortMethod": this.sortMethod, "searchText":this.searchText, "filter":this.boxChecked,"from":String( $("#time-start").val()), "to":String( $("#time-end").val() ) }
+      axios.post(path,this.std)
+        .then((res) => {
+          console.log("Loading Search")
+          this.searchResult = res.data.searchResults;   
+          console.log(this.searchResult)       
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.log("Content failed to fetch")
+          console.error(error);
+        });
+    },
     passID(someid) {
       this.id = someid;
       // bus.emit('toDetail', this.id);
@@ -51,33 +77,13 @@ export default {
         }
       })
     },
-    // sendToDetail() {
-    //   bus.$emit("aMSG", "MSG from trending")
-    // },
-    // getting from flask----------------
-    getResources() {
-      const path = 'http://localhost:5000/trending';
-      axios.get(path)
-        .then((res) => {
-          this.trending = res.data.trendingResults;
-        })
-        .catch((error) => {
-          // eslint-disable-next-line
-          console.error(error);
-        });
-    },
-  },
-  created() {
-    this.getResources();
-  },
-  // getting from flask----------------
+  }
 }
+// document.getElementById("time-end").valueAsDate = new Date();
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-.trending{
+.search{
   width: 80%;
   margin-left:10% ;
 }

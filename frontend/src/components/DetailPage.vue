@@ -1,4 +1,5 @@
 <template>
+  <h1 class = "preload-placeholder"> Loading</h1>
   <div class = 'detail'>
     <div class = 'container'> 
       <h1 id="title">This is Title: default </h1>
@@ -7,21 +8,19 @@
       <div id = "image-container">
         <!-- <img src="../assets/logo.png"> -->
         <img :src="require(`@/assets/${filename}.png`)">
-      </div>
 
-      <!-- word cloud -->
-      <h2> Word Count</h2>
+      </div>
+      <h2> {{sentiment}}</h2>
       <div class="count-list">
         <ul>
-     
         <li v-for="(item,id) in wordcount" :key = "id" class="num" >
           <h3>{{item.count}}: {{item.word}}</h3>
         </li>
-        <!-- <li v-for="item in wordcount">
-          {{ item. }}
-        </li> -->
+
         </ul>
     </div>
+
+    <button @click="openLDA()">See pyLDAvis Results</button>
     </div>
   </div>
 </template>
@@ -30,7 +29,9 @@
 <script>
 //import {bus} from '../eventbus.js';
 import bus from '@/bus/mittbus.js';
-// import { METHODS } from 'http';
+import $ from 'jquery'
+// import html from  '@/assetslda.html';
+
 import axios from 'axios';
 
 export default {
@@ -44,7 +45,9 @@ export default {
       content: 'cccc',
       filename: 'logo',
       wordcount: [{ word: 'Foo', count: 16 }, { message: 'Bar', count: 7 }], // [('doe', 15),('used', 10),('john', 10)]
-      tmpC: 0
+      sentiment: '--',
+      // html,
+      // lda: "<h1 style='color:red'>Hello Gowtham</h1>"
     }
   },
   mounted() {
@@ -52,7 +55,7 @@ export default {
     // document.getElementById("title").textContent = this.$route.query.id;
     this.id = this.$route.query.id;
     this.fetchDetailbyID();
-
+    // this.lda = require('@/assetslda.html').default
     //update
     // document.getElementById("content").textContent = this.content;
 
@@ -82,6 +85,17 @@ export default {
 
           // word count wordcount
           this.wordcount = res.data.wordcount;
+          // sentimental score
+          if (res.data.score > 0.2) {
+            this.sentiment = 'Over All Sentiment: Positive'   //+ res.data.score
+          } else if (res.data.score < -0.2) { 
+            this.sentiment = 'Over All Sentiment: Negative'
+          } else {
+            this.sentiment = 'Over All Sentiment: Neutral'
+          }
+          $('.preload-placeholder').hide();
+          $('.detail').show();
+
           
         })
         .catch((error) => {
@@ -93,6 +107,10 @@ export default {
     updateAfterFetch() {
       document.getElementById("title").textContent = this.title;
       document.getElementById("content").textContent = this.content;
+    },
+    openLDA() {
+      window.open('lda.html')
+// window.open(require('@/assetslda.html').default)//('file:///../assetslda.html');
     }
   },
 }
@@ -103,6 +121,7 @@ export default {
   font-size: 1.5em;
   font-family: sans-serif;
   line-height: 1.6;
+  display: none;
 }
 .container{
   width: 90%;

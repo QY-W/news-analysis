@@ -3,6 +3,9 @@ import HomePage from '../components/HomePage.vue'
 import SomeDoor from '../components/SomeDoor.vue'
 import Trending from '@/components/Trending.vue'
 import DetailPage from '@/components/DetailPage.vue'
+import SearchPage from '@/components/SearchPage.vue'
+import LoginPage from '@/components/LoginPage.vue'
+import Destination from '@/components/lda.html'
 import { createApp } from 'vue'
 
 const routes = [
@@ -25,7 +28,17 @@ const routes = [
     path: '/detail',
     name: 'DetailPage',
     component: DetailPage
-  }
+  },
+  {
+    path: '/search',
+    name: 'SearchPage',
+    component: SearchPage
+  },
+  {
+    path: '/login',
+    name: 'LoginPage',
+    component: LoginPage
+  },
 ]
 
 const router = createRouter({
