@@ -7,10 +7,7 @@
 		```
 		 .\venv\Scripts\activate & activate flask & python app.py
 		```
-install necessary package
-pip install flask
-pip install flask_cors ```
-			 
+	 
 2.  **Framework used  :** 
 	- Frontend: Vue
 	- Backend:  Flask (Python)
